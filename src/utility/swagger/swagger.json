@@ -1,0 +1,309 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CRUD API Docs",
+    "description": "This is api docmentation of the crud app",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/",
+      "description": "Local"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get Server running status",
+        "description": "Server is running status",
+        "responses": {
+          "200": {
+            "description": "Server is running properly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/init":{
+      "get":{
+        "summary": "Use to create inital user",
+        "description": "initial user email: test@email.com , password: test",
+        "responses": {
+          "200":{
+            "description": "Successfully initial 1 user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#/components/schemas/ok_message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/add": {
+      "post": {
+        "tags": ["STUDENT"],
+        "summary": "Add Student",
+        "description": "Add Student",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "class": { "type": "string" },
+                  "dob": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok_message"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/student/get/{id}": {
+      "get": {
+        "summary": "get student by id",
+        "description": "Get student data by id",
+        "tags": ["STUDENT"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Student id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "email": { "type": "string" },
+                    "name": { "type": "string" },
+                    "dob": { "type": "string" },
+                    "class": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/student/get/all": {
+      "get": {
+        "tags": ["STUDENT"],
+        "summary": "Get All Student",
+        "responses": {
+          "200": {
+            "description": "Success got all student",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": { "type": "string" },
+                    "students": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "email": { "type": "string" },
+                          "name": { "type": "string" },
+                          "dob": { "type": "string" },
+                          "class": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/student/del/{id}":{
+      "delete":{
+        "tags": ["STUDENT"],
+        "summary": "Delete Student by id",
+        "description": "Delete student from db",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema":{
+              "type": "string"
+            }
+          }
+        
+        ],
+        "responses": {
+          "200":{
+            "description": "Success delete",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#/components/schemas/ok_message"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth":[]
+          }
+        ]
+      }
+    },
+    "/student/update/{id}":{
+      "post":{
+        "tags": ["STUDENT"],
+        "summary": "Update Student by id",
+        "description": "Update student from db",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema":{
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody":{
+          "content": {
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties": {
+                  "email":{"type": "string"},
+                  "name":{"type": "string"},
+                  "class":{"type": "string"},
+                  "dob":{"type": "string"},
+                  "password":{"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200":{
+            "description": "Successfully update",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#/components/schemas/ok_message"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth":[]
+          }
+        ]
+        
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["AUTH"],
+        "summary": "for login and getting user id",
+        "description": "Use for login and get JWT token!",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok_message"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ok_message": {
+        "type": "object",
+        "properties": {
+          "msg": { "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+#folders
+node_modules
+
+#extenstions
+.pdf
+
+#files
+.env
+serviceAccountKey.json
+
