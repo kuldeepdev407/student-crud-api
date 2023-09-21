@@ -1,4 +1,4 @@
-# Student CRUD App
+# Student CRUD API
 Simple basic CURD based node js application
 
 ## Topics
