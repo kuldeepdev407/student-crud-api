@@ -2,7 +2,7 @@
 node_modules
 
 #extenstions
-*.pdf
+*.[Pp][Dd][Ff]
 
 #files
 .env
